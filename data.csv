@@ -1,6 +1,5 @@
-Latitude,Longitude,Title,Description
-43.6045,1.4438,"Place du Capitole","Le célèbre place du Capitole de Toulouse"
-43.60849228679039, 1.4420977020653007,"Basilique Saint-Sernin","La basilique Saint-Sernin, un des plus grands monuments romans de France"
-43.600775534290875, 1.4466429982018045,"Musée des Augustins","Le Musée des Augustins, un musée d'art de Toulouse"
-43.59315643700889, 1.4505805817228183,"Jardin des Plantes","Le Jardin des Plantes, un jardin botanique de Toulouse"
-43.593275807623755, 1.444612623376438,"Palais de Justice","Le Palais de Justice de Toulouse"
+title,address
+Institut Limayrac,50 Rue de Limayrac, 31500 Toulouse, France
+Place du Capitole, 1 Pl. du Capitole, 31000 Toulouse, France
+Basilique Saint-Sernin, Place Saint-Sernin, 31000 Toulouse, France
+Cité de l'Espace, Avenue Jean Gonord, 31030 Toulouse, France
