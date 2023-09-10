@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <title>Administration de la Carte</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+
+</head>
+<body>
+
+<div class="control-buttons">
+    <button id="filterStateButton">Filtrer par état</button>
+	<button id="filterTypeButton">Filtrer par type</button>
+	<select id="stateFilter" style="display:none;">
+        <option value="all">Tous</option>
+        <option value="1">Gelé</option>
+        <option value="2">Disponible</option>
+        <option value="3">Semi-Disponible</option>
+        <option value="4">Non Disponible</option>
+    </select>
+    <select id="typeFilter" style="display:none;">
+        <option value="all">Tous</option>
+        <option value="1">Maison de Retraite</option>
+        <option value="2">Hôpital</option>
+        <option value="3">Clinique</option>
+        <option value="4">CCAS</option>
+    </select>
+</div>
+
+<div id="map" style="width: 100%;"></div>
+
+<script>
+var map = L.map('map').setView([43.6, 1.44], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var markers = L.markerClusterGroup();
+
+fetch('getPoints.php')
+.then(response => response.json())
+.then(data => {
+    data.forEach(point => {
+		let etatDescription = '';
+			switch (point.Etat) {
+				case 1: etatDescription = 'Gelé'; break;
+				case 2: etatDescription = 'Disponible'; break;
+				case 3: etatDescription = 'Semi-Disponible'; break;
+				case 4: etatDescription = 'Non Disponible'; break;
+			}
+			
+		let typeDescription = '';
+			switch (point.Type) {
+				case 1: typeDescription = 'Maison de Retraite'; break;
+				case 2: typeDescription = 'Hôpital'; break;
+				case 3: typeDescription = 'Clinique'; break;
+				case 4: typeDescription = 'CCAS'; break;
+			}
+				
+		let markerColor = getMarkerColor(point.Etat);
+        let customIcon = L.icon({
+            iconUrl: `https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${markerColor}.png`,
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+			
+        let marker = L.marker([point.Latitude, point.Longitude], { icon: customIcon, draggable: true, Etat: point.Etat, Type: point.Type })
+            .bindPopup(`
+				<b>Adresse :</b> ${point.Adresse}, ${point.Codepostal} ${point.Ville}<br>
+				<b>Structure:</b> ${point.Structure}<br>
+				<b>Type :</b> ${typeDescription}<br>
+				<b>Professionnel(le) :</b> ${point.Professionnel}<br>
+				<b>Mail Professionnel(le) :</b> ${point.MailPro}<br>
+				<b>Telephone Professionnel(le) :</b> ${point.TelPro}<br>
+				<b>Date du dernier stage:</b> ${point.Datedernierstage}<br>
+				<b>Etat:</b> ${etatDescription}<br>
+			`);
+
+        markers.addLayer(marker);
+        
+        marker.on('dragend', function(e) {
+            updateMarker(point.ID, e.target.getLatLng().lat, e.target.getLatLng().lng);
+        });
+    });
+    
+    map.addLayer(markers);
+});
+
+function getMarkerColor(etat) {
+    switch (etat) {
+        case 1:
+            return 'blue';
+        case 2:
+            return 'green';
+        case 3:
+            return 'yellow';
+        case 4:
+            return 'red';
+        default:
+            return 'grey';
+    }
+}
+
+function filterMarkersByState(state) {
+    markers.eachLayer(function(layer) {
+        if (state === "all" || layer.options.Etat.toString() === state) {
+            layer.setOpacity(1);
+            layer.setZIndexOffset(0);
+        } else {
+            layer.setOpacity(0);
+            layer.setZIndexOffset(-1000);
+        }
+    });
+}
+
+document.getElementById("stateFilter").addEventListener("change", function(e) {
+    let selectedState = e.target.value;
+    filterMarkersByState(selectedState);
+});
+
+
+function filterMarkersByType(type) {
+    markers.eachLayer(function(layer) {
+        if (type === "all" || layer.options.Type.toString() === type) {
+            layer.setOpacity(1);
+            layer.setZIndexOffset(0);
+        } else {
+            layer.setOpacity(0);
+            layer.setZIndexOffset(-1000);
+        }
+    });
+}
+
+document.getElementById("typeFilter").addEventListener("change", function(e) {
+    let selectedType = e.target.value;
+    filterMarkersByType(selectedType);
+});
+
+document.getElementById('filterStateButton').addEventListener('click', function() {
+	let typeFilter = document.getElementById('typeFilter');
+	typeFilter.style.display = "none";
+	typeFilter.value = "all";
+	filterMarkersByType("all");
+    let stateFilter = document.getElementById('stateFilter');
+    if (stateFilter.style.display === "none" || stateFilter.style.display === "") {
+        stateFilter.style.display = "block";
+    } else {
+        stateFilter.style.display = "none";
+    }
+});
+
+document.getElementById('filterTypeButton').addEventListener('click', function() {
+	let stateFilter = document.getElementById('stateFilter');
+	stateFilter.style.display = "none";
+	stateFilter.value = "all";
+	filterMarkersByState("all");
+    let typeFilter = document.getElementById('typeFilter');
+    if (typeFilter.style.display === "none" || typeFilter.style.display === "") {
+        typeFilter.style.display = "block";
+    } else {
+        typeFilter.style.display = "none";
+    }
+});
+
+
+
+</script>
+</body>
+</html>
