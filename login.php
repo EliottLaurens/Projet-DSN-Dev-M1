@@ -36,4 +36,7 @@ if ($user) {
 		}
     }
 }
+else {
+    header('Location: login.html?error=1');
+}
 ?>

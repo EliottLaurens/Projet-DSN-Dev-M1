@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body style="flex-direction:column">
+<div id="error" style="color:red;"></div>
     <form action="login.php" method="post">
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="mot_de_passe" placeholder="Mot de passe" required>
@@ -14,5 +15,12 @@
 	<div class="centered-button">
     <button class="control-btn" onclick="window.location.href='carteEleve.html'">Accéder à la Carte Élève</button>
 </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        if (error) {
+            document.getElementById('error').textContent = 'Email ou mot de passe incorrect!';
+        }
+    </script>
 </body>
 </html>
