@@ -26,6 +26,8 @@ if($_SESSION['role'] != "enseignant") {
 <body>
 
 <div class="control-buttons">
+	<button id="importCsvButton">Importer CSV</button>
+	<input type="file" id="csvFileInput" accept=".csv" style="display: none;" />
     <button id="addPointButton">Ajouter un point</button>
     <button id="filterStateButton">Filtrer par état</button>
 	<button id="filterTypeButton">Filtrer par type</button>
@@ -280,6 +282,54 @@ document.getElementById('filterTypeButton').addEventListener('click', function()
     }
 });
 
+document.getElementById('importCsvButton').addEventListener('click', function() {
+    document.getElementById('csvFileInput').click();
+});
+
+document.getElementById('csvFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const text = e.target.result;
+        const rows = text.split(/\r?\n/).slice(1);
+        const points = rows.map(row => {
+            const cols = row.split(',');
+            return {
+                structure: cols[0] ? cols[0].trim() : '',
+                type: cols[1] ? cols[1].trim() : '',
+                professionnel: cols[2] ? cols[2].trim() : '',
+                mailPro: cols[3] ? cols[3].trim() : '',
+                telPro: cols[4] ? cols[4].trim() : '',
+                lastDate: cols[5] ? cols[5].trim() : '',
+                etat: cols[6] ? cols[6].trim() : '',
+                address: cols[7] ? cols[7].trim() : '',
+                postalCode: cols[8] ? cols[8].trim() : '',
+                city: cols[9] ? cols[9].trim() : '',
+                latitude: cols[10] ? parseFloat(cols[10].trim()) : 0,
+                longitude: cols[11] ? parseFloat(cols[11].trim()) : 0,
+            };
+        });
+
+        fetch('importPoints.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(points)
+        }).then(response => {
+            if (response.ok) return response.text();
+            else return response.text().then(text => Promise.reject(text));
+        }).then(text => {
+            alert('Points importés avec succès !');
+			location.reload();
+        }).catch(error => {
+            alert('Erreur lors de l’importation: ' + error);
+        });
+    };
+    reader.readAsText(file);
+});
 
 
 </script>

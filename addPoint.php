@@ -56,7 +56,6 @@ try {
 function getGeocodeData($fullAddress) {
     $url = "https://nominatim.openstreetmap.org/search?format=json&q=" . urlencode($fullAddress);
     
-    // Initialiser cURL
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

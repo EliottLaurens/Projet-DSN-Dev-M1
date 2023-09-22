@@ -1,6 +1,3 @@
-title,address,color
-"Institut Limayrac","Institut de Formation Limayrac, 50, Rue de Limayrac, Côte Pavée, Château de l'Hers, Limayrac, Toulouse Est, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, 31079, France","red"
-"Place du Capitole","Croix occitane et ses 12 signes du zodiaque, Place du Capitole, Place Occitane, Capitole, Toulouse Centre, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, 31000, France","blue"
-"Musée des Augustins","Musée des Augustins, Rue Antonin Mercié, Place Occitane, Capitole, Toulouse Centre, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, 31000, France","green"
-"Basilique Saint-Sernin","Basilique Saint-Sernin, Place Saint-Sernin, Place Occitane, Capitole, Toulouse Centre, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, 31000, France","red"
-"Cité de l'Espace","Cité de l'Espace, Rue Maurice Hurel, Côte Pavée, Château de l'Hers, Limayrac, Toulouse Est, Toulouse, Haute-Garonne, Occitanie, France métropolitaine, 31500, France","blue"
+structure,type,professionnel,mailPro,telPro,lastDate,etat,address,postalCode,city,latitude,longitude
+Hôpital Purpan,2,Céline Durant,celine.durant@gmail.com,0697448752,2023-05-12,2,Place du Docteur Joseph Baylac,31300,Toulouse,43.60774612426758,1.3973642587661743
+CCAS Toulouse,4,Didier Morand,didier.morand@gmail.com,,2023-02-06,3,2 BIS Rue de Belfort,31300,Toulouse,43.60868835449219,1.4508247375488281

@@ -139,7 +139,7 @@ label {
     align-items: center;
 }
 
-#filterStateButton, #filterTypeButton, #addPointButton {
+#filterStateButton, #filterTypeButton, #addPointButton, #importCsvButton {
     margin: 0 5px;
     background-color: #4CAF50;
     border: none;
@@ -153,7 +153,7 @@ label {
     cursor: pointer;
 }
 
-#filterStateButton:hover, #filterTypeButton:hover, #addPointButton:hover {
+#filterStateButton:hover, #filterTypeButton:hover, #addPointButton:hover, #importCsvButton:hover {
     background-color: white;
     color: #4CAF50;
 }
