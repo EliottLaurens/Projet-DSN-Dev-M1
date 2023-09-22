@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 10 sep. 2023 à 11:07
+-- Généré le :  ven. 22 sep. 2023 à 02:48
 -- Version du serveur :  5.7.17
 -- Version de PHP :  5.6.30
 
@@ -49,8 +49,12 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`ID`, `Structure`, `Type`, `Professionnel`, `MailPro`, `TelPro`, `Datedernierstage`, `Adresse`, `Codepostal`, `Ville`, `Latitude`, `Longitude`, `Etat`) VALUES
-(1, 'Cité de l\'espace', 2, 'Jean Martin', '', '0655898874', '2023-09-06', 'Avenue Jean Gonord', 31500, 'Toulouse', 43.5852, 1.49183, 2),
-(2, 'Limayrac', 1, 'Julien Dupres', 'julien.dupres@gmail.com', '0608688958', '2023-09-14', '50 rue de Limayrac', 31500, 'Toulouse', 43.5938, 1.47065, 4);
+(1, 'Cité de l\'espace', 4, 'Jean Martin', '', '0655898874', '2023-09-06', 'Avenue Jean Gonord', 31500, 'Toulouse', 43.5852, 1.49183, 2),
+(2, 'Limayrac', 1, 'Julien Dupres', 'julien.dupres@gmail.com', '0608688958', '2023-09-14', '50 rue de Limayrac', 31500, 'Toulouse', 43.5938, 1.47065, 4),
+(3, 'Clinique Rive Gauche', 3, 'Jeanne Dubois', 'jeanne.dubois@gmail.com', '0648558965', '2023-08-08', '49 Allée Charles de Fitte', 31300, 'Toulouse', 43.5961, 1.43219, 3),
+(4, 'Hôpital Rangueil', 2, 'Catherine Dupuis', 'catherine.dupuis@gmail.com', '0607441256', '2023-06-08', '1 Avenue du Professeur Jean Poulhès', 31400, 'Toulouse', 43.5597, 1.45416, 1),
+(13, 'Hôpital Purpan', 2, 'Céline Durant', 'celine.durant@gmail.com', '0697448752', '2023-05-12', 'Place du Docteur Joseph Baylac', 31300, 'Toulouse', 43.6077, 1.39736, 2),
+(14, 'CCAS Toulouse', 4, 'Didier Morand', 'didier.morand@gmail.com', '', '2023-02-06', '2 BIS Rue de Belfort', 31300, 'Toulouse', 43.6087, 1.45082, 3);
 
 -- --------------------------------------------------------
 
@@ -99,7 +103,7 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `point`
 --
 ALTER TABLE `point`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT pour la table `utilisateurs`
 --
